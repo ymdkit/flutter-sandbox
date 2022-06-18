@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../settings/settings_view.dart';
 import 'sample_item.dart';
 import 'sample_item_details_view.dart';
+
+part 'sample_item_list_view.g.dart';
+
+@TypedGoRoute<SampleListItemRoute>(
+  path: '/items',
+  routes: [
+    TypedGoRoute<SampleItemDetailsRoute>(path: ':id'),
+  ],
+)
+class SampleListItemRoute extends GoRouteData {
+  const SampleListItemRoute();
+
+  @override
+  Widget build(BuildContext context) => const SampleItemListView();
+}
 
 class SampleItemListView extends HookConsumerWidget {
   const SampleItemListView({
     Key? key,
   }) : super(key: key);
-
-  static const routeName = '/';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -18,18 +31,9 @@ class SampleItemListView extends HookConsumerWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Sample Items'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-                Navigator.restorablePushNamed(context, SettingsView.routeName);
-              },
-            ),
-          ],
         ),
         body: futureItems.when(
           data: (items) => ListView.builder(
-            restorationId: 'sampleItemListView',
             itemCount: items.length,
             itemBuilder: (BuildContext context, int index) {
               final item = items[index];
@@ -41,10 +45,7 @@ class SampleItemListView extends HookConsumerWidget {
                         AssetImage('assets/images/flutter_logo.png'),
                   ),
                   onTap: () {
-                    Navigator.restorablePushNamed(
-                      context,
-                      SampleItemDetailsView.routeName,
-                    );
+                    SampleItemDetailsRoute(item.id).go(context);
                   });
             },
           ),
@@ -54,12 +55,14 @@ class SampleItemListView extends HookConsumerWidget {
   }
 }
 
-final itemsProvider = FutureProvider<List<SampleItem>>((ref) async {
+final itemsProvider = FutureProvider.autoDispose<List<SampleItem>>((ref) async {
   await Future.delayed(const Duration(seconds: 2));
   return items;
 });
 
-final itemDetailsProvider = FutureProvider.family<SampleItem, int>((ref, id) async {
+final itemDetailsProvider =
+    FutureProvider.autoDispose.family<SampleItem, int>((ref, id) async {
+  await Future.delayed(const Duration(seconds: 2));
   return items.firstWhere((it) => it.id == id, orElse: () => throw Exception());
 });
 
