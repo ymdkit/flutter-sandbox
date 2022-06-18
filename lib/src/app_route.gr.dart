@@ -25,6 +25,10 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const EmptyRouterPage());
     },
+    PagingItemsRouter.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const EmptyRouterPage());
+    },
     SampleItemListRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const SampleItemListPage());
@@ -34,6 +38,10 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: SampleItemDetailsPage(key: args.key, id: args.id));
+    },
+    PagingItemListRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const PagingItemListPage());
     }
   };
 
@@ -48,6 +56,15 @@ class _$AppRouter extends RootStackRouter {
                     path: '', parent: ItemsRouter.name),
                 RouteConfig(SampleItemDetailsRoute.name,
                     path: ':id', parent: ItemsRouter.name)
+              ]),
+          RouteConfig(PagingItemsRouter.name,
+              path: 'paging_items',
+              parent: ContainerRoute.name,
+              children: [
+                RouteConfig(PagingItemListRoute.name,
+                    path: '', parent: PagingItemsRouter.name),
+                RouteConfig(SampleItemDetailsRoute.name,
+                    path: ':id', parent: PagingItemsRouter.name)
               ])
         ])
       ];
@@ -69,6 +86,16 @@ class ItemsRouter extends PageRouteInfo<void> {
       : super(ItemsRouter.name, path: 'items', initialChildren: children);
 
   static const String name = 'ItemsRouter';
+}
+
+/// generated route for
+/// [EmptyRouterPage]
+class PagingItemsRouter extends PageRouteInfo<void> {
+  const PagingItemsRouter({List<PageRouteInfo>? children})
+      : super(PagingItemsRouter.name,
+            path: 'paging_items', initialChildren: children);
+
+  static const String name = 'PagingItemsRouter';
 }
 
 /// generated route for
@@ -100,4 +127,12 @@ class SampleItemDetailsRouteArgs {
   String toString() {
     return 'SampleItemDetailsRouteArgs{key: $key, id: $id}';
   }
+}
+
+/// generated route for
+/// [PagingItemListPage]
+class PagingItemListRoute extends PageRouteInfo<void> {
+  const PagingItemListRoute() : super(PagingItemListRoute.name, path: '');
+
+  static const String name = 'PagingItemListRoute';
 }

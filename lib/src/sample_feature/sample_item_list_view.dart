@@ -44,17 +44,18 @@ class SampleItemListPage extends HookConsumerWidget {
 
 final itemsProvider = FutureProvider<List<SampleItem>>((ref) async {
   await Future.delayed(const Duration(seconds: 2));
-  return items;
+  return ref.watch(itemsDataProvider);
 });
 
 final itemDetailsProvider =
     FutureProvider.autoDispose.family<SampleItem, int>((ref, id) async {
+  final items = ref.watch(itemsDataProvider);
   await Future.delayed(const Duration(seconds: 2));
   return items.firstWhere((it) => it.id == id, orElse: () => throw Exception());
 });
 
-final items = [
-  SampleItem(1),
-  SampleItem(2),
-  SampleItem(3),
-];
+final itemsDataProvider = Provider((_) => [
+      SampleItem(1),
+      SampleItem(2),
+      SampleItem(3),
+    ]);

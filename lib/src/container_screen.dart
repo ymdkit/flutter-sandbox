@@ -10,15 +10,15 @@ class ContainerPage extends StatelessWidget {
     return AutoTabsScaffold(
       routes: const [
         ItemsRouter(),
-        ItemsRouter(),
+        PagingItemsRouter(),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
         return BottomNavigationBar(
           currentIndex: tabsRouter.activeIndex,
           onTap: tabsRouter.setActiveIndex,
           items: const [
-            BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
-            BottomNavigationBarItem(label: 'Search', icon: Icon(Icons.search)),
+            BottomNavigationBarItem(label: 'リスト', icon: Icon(Icons.home)),
+            BottomNavigationBarItem(label: 'ページング', icon: Icon(Icons.search)),
           ],
         );
       },
