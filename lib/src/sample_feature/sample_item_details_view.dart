@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sandbox/src/sample_feature/sample_item_list_view.dart';
 
-class SampleItemDetailsRoute extends GoRouteData {
-  const SampleItemDetailsRoute(this.id);
-
-  final int id;
-
-  @override
-  Widget build(BuildContext context) => SampleItemDetailsView(id: id);
-}
-
-class SampleItemDetailsView extends HookConsumerWidget {
-  const SampleItemDetailsView({
+class SampleItemDetailsPage extends HookConsumerWidget {
+  const SampleItemDetailsPage({
     Key? key,
     required this.id,
   }) : super(key: key);

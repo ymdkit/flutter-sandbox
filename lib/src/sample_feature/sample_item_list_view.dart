@@ -1,27 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sandbox/src/app_route.dart';
 
 import 'sample_item.dart';
-import 'sample_item_details_view.dart';
 
-part 'sample_item_list_view.g.dart';
-
-@TypedGoRoute<SampleListItemRoute>(
-  path: '/items',
-  routes: [
-    TypedGoRoute<SampleItemDetailsRoute>(path: ':id'),
-  ],
-)
-class SampleListItemRoute extends GoRouteData {
-  const SampleListItemRoute();
-
-  @override
-  Widget build(BuildContext context) => const SampleItemListView();
-}
-
-class SampleItemListView extends HookConsumerWidget {
-  const SampleItemListView({
+class SampleItemListPage extends HookConsumerWidget {
+  const SampleItemListPage({
     Key? key,
   }) : super(key: key);
 
@@ -46,7 +31,7 @@ class SampleItemListView extends HookConsumerWidget {
                           AssetImage('assets/images/flutter_logo.png'),
                     ),
                     onTap: () {
-                      SampleItemDetailsRoute(item.id).go(context);
+                      context.pushRoute(SampleItemDetailsRoute(id: item.id));
                     });
               },
             ),
