@@ -1,5 +1,5 @@
 class SampleItem {
-  const SampleItem(this.id);
+  SampleItem(this.id);
 
   final int id;
 }
