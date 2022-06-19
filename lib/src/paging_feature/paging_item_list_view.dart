@@ -51,7 +51,7 @@ class PagingItemListPage extends HookConsumerWidget {
                               key: const Key('paging trigger'),
                               child: const SizedBox(height: 64.0),
                               onVisibilityChanged: (visibilityInfo) {
-                                if (visibilityInfo.visibleFraction >= 1) {
+                                if (visibilityInfo.visibleFraction == 1) {
                                   pagedItemsStateNotifier.fetchNextPage();
                                 }
                               },
